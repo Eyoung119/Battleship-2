@@ -48,5 +48,8 @@ public class Ship {
 	
 	public void setLength(int length) {
 		this.length = length;
+		if (length <= 0) {
+			setIsSunk(true);
+		}
 	}
 }
