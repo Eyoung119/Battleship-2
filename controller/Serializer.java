@@ -13,7 +13,7 @@ public class Serializer {
 
 	private File file = new File(".txt");
 	
-	private void write(Board item) {
+	public void write(Board item) {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
@@ -38,7 +38,7 @@ public class Serializer {
 		}
 	}
 	
-	private Board read() {
+	public Board read() {
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		Board item = null;
