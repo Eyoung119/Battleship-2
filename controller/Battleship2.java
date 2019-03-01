@@ -18,12 +18,8 @@ public class Battleship2 {
 		
 	}
 	
-	public void saveGame() {
-		serializer.write(boards);
-	}
-	
-	public void loadGame(File file) {
-		boards = serializer.read(file);	
+	public void serialize() {
+		
 	}
 	
 	public void updateDisplay() {

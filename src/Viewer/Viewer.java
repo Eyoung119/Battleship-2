@@ -13,7 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class Viewer extends Application {
-
+private BattleShipSceneBuilder BS=new BattleShipSceneBuilder();
 	public void run() {
 		launch("");
 	}
@@ -21,18 +21,9 @@ public class Viewer extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
-			Label bulb = new Label();
-			VBox root = new VBox();
-			root.setAlignment(Pos.CENTER);
+		
 
-			bulb.setMinSize(1700, 900);
-			bulb.setStyle("-fx-background-color: black");
-			root.getChildren().addAll(bulb);
-
-			Scene scene = new Scene(root,1700, 900);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-
-			primaryStage.setScene(scene);
+			primaryStage.setScene(BS.boards());
 			primaryStage.setTitle("BattleShip 2: More");
 			primaryStage.show();
 		} catch (Exception e) {
