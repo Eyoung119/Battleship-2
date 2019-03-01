@@ -1,8 +1,6 @@
 package models;
 
-import java.io.Serializable;
-
-public class Cell implements Serializable {
+public class Cell {
 	private cellState state;
 //	SpriteMap sprite;
 	
