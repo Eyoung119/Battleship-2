@@ -13,7 +13,7 @@ public class Serializer {
 
 	private File file = new File(".txt");
 	
-	private void write(Board item) throws IOException {
+	private void write(Board item) {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
@@ -28,12 +28,17 @@ public class Serializer {
 			
 		}
 		finally {
-			fos.close();
-			oos.close();
+			try {				
+				fos.close();
+				oos.close();
+			} catch (IOException ioe) {
+				System.out.println("There was an IOException, RIP.");
+				ioe.printStackTrace();
+			}
 		}
 	}
 	
-	private Board read() throws IOException {
+	private Board read() {
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		Board item = null;
@@ -49,8 +54,13 @@ public class Serializer {
 			
 		}
 		finally {
-			fis.close();
-			ois.close();
+			try {				
+				fis.close();
+				ois.close();
+			} catch (IOException ioe) {
+				System.out.println("There was an IOException, RIP.");
+				ioe.printStackTrace();
+			}
 		}
 		
 		return item;
