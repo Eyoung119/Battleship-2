@@ -1,6 +1,9 @@
 package models;
 
 public enum cellState {
-
-	HIT, MISS, EMPTY, SHIP
+	
+	HIT,
+	MISS,
+	EMPTY,
+	SHIP
 }
