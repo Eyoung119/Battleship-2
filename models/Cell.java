@@ -1,7 +1,7 @@
 package models;
 
 public class Cell {
-	private cellState state;
+	private cellState state=cellState.EMPTY;
 //	SpriteMap sprite;
 	
 	public Cell(cellState state) {
