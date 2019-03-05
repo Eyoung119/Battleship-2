@@ -24,7 +24,6 @@ public class Main extends Application {
 	        Scene scene = new Scene(root, 359, 374);
 	    
 	        primaryStage.setTitle("Battleship 2: MORE");
-	        //BattleShipSceneBuilder.boardDisplayTest()
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 		} catch (Exception e) {
