@@ -18,7 +18,7 @@ public class Main extends Application {
 		    
 	        Scene scene = new Scene(root, 359, 374);
 	    
-	        primaryStage.setTitle("FXML Welcome");
+	        primaryStage.setTitle("Battleship 2: More");
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 		} catch (Exception e) {
