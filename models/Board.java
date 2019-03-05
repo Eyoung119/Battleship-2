@@ -3,27 +3,33 @@ package models;
 import java.io.Serializable;
 
 public class Board implements Serializable {
+	
+	private Player player = null;
 	private Cell[][] cells = new Cell[10][10];
 	
-	public Board() {
+	public Board(Player player) {
+		setPlayer(player);
+		for (int x = 0; x < cells.length; x++) {
+			for (int y = 0; y < cells[x].length; y++) {
+				cells[x][y] = new Cell();
+			}
+		}
 	}
 	
 	public Cell[][] getCells() {
 		return cells;
 	}
-	public void setCells( Cell[][] c) {
-		cells=c;
-	}
 	
 	public void placeShips() {
-		//Note from lorelei: While using the method you used works great for reading inputs, you wont be able to edit input of
-		//the array like that. You MUST use this method to assign values the way you intended
-		for(int i=0;i<cells.length;i++) {
-			for(int j=0;j<cells[i].length;j++) {
-				cells[i][j]=new Cell(cellState.HIT);
-			}
-		}
 		//This method is INCOMPLETE!!!
 		//When GUI is finished, complete logic for placing ships.
+	}
+	
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 }
