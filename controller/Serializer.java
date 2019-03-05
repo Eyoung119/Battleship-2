@@ -11,9 +11,9 @@ import models.Board;
 
 public class Serializer {
 
-	private File file = new File(".txt");
 	
-	public void write(Board item) {
+	public void write(Board[] item) {
+		File file = new File(".txt");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
@@ -38,17 +38,14 @@ public class Serializer {
 		}
 	}
 	
-	public Board read() {
+	public Board[] read(File file) {
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
-		Board item = null;
+		Board[] item = null;
 		try {
-			if(!file.exists()) {
-				write(new Board());
-			}
 			fis = new FileInputStream(file);
 			ois = new ObjectInputStream(fis);
-			item = (Board) ois.readObject();
+			item = (Board[]) ois.readObject();
 		}
 		catch(Exception e) {
 			
