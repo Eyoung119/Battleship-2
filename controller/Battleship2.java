@@ -16,7 +16,12 @@ public class Battleship2 {
 	private static Serializer serializer;
 	
 	public void loadBtn() {
-		
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setInitialDirectory(new File("saves"));
+		File file = fileChooser.showOpenDialog(null);
+		if (file != null) {			
+			boards = serializer.read(file);
+		}
 	}
 	
 	public void startBtn() {
