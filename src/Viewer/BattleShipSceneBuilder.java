@@ -33,13 +33,15 @@ public class BattleShipSceneBuilder {
 	}
 
 	int numofsquares = 12;
-	private Board boardInput;
+	private Board[] boardInput;
 
-	public void passBoard(Board boardIn) {
-		boardInput = boardIn;
+	public void passBoard(Board[] b) {
+		boardInput = b;
+		numofsquares= b[0].getCells().length+2;
 	}
+	
 
-	public Scene boardDisplayTest(Board boardInput) {
+	public Scene boardDisplayTest(Board[] boardInput) {
 		GridPane root = new GridPane();
 		System.out.println(boardInput);
 		for (int i = 0; i < numofsquares; i++) {
@@ -66,16 +68,16 @@ public class BattleShipSceneBuilder {
 							root.getChildren().addAll(label);
 						} else {
 							Label label = new Label();
-							if (boardInput.getCells()[i - 1][j - 1].getCellState() == cellState.SHIP) {
+							if (boardInput[0].getCells()[i - 1][j - 1].getCellState() == cellState.SHIP) {
 								label.setStyle(SHIP_TILE_NOT_HIT);
 							}
-							if (boardInput.getCells()[i - 1][j - 1].getCellState() == cellState.EMPTY) {
+							if (boardInput[0].getCells()[i - 1][j - 1].getCellState() == cellState.EMPTY) {
 								label.setStyle(OCEAN_TILE_NOT_HIT);
 							}
-							if (boardInput.getCells()[i - 1][j - 1].getCellState() == cellState.MISS) {
+							if (boardInput[0].getCells()[i - 1][j - 1].getCellState() == cellState.MISS) {
 								label.setStyle(OCEAN_TILE_HIT);
 							}
-							if (boardInput.getCells()[i - 1][j - 1].getCellState() == cellState.HIT) {
+							if (boardInput[0].getCells()[i - 1][j - 1].getCellState() == cellState.HIT) {
 								label.setStyle(SHIP_TILE_HIT);
 							}
 							label.setMinSize(48, 48);
@@ -87,12 +89,65 @@ public class BattleShipSceneBuilder {
 				}
 			}
 		}
+		Label test = new Label();
+		test.setStyle("-fx-background-color: yellow");
+		test.setMinSize(25, 25);
+		root.setConstraints(test, numofsquares+1, 1);
+		root.getChildren().addAll(test);
+		int offset=numofsquares+2;
+		for (int i = 0; i < numofsquares; i++) {
+			for (int j = 0; j < numofsquares; j++) {
+				if ((i == 0 || i == numofsquares - 1) && (j == 0 || j == numofsquares - 1)) {
+					Label label = new Label();
+					label.setStyle(BORDER);
+					label.setMinSize(25, 25);
+					root.setConstraints(label, i+offset, j);
+					root.getChildren().addAll(label);
+				} else {
+					if (i == 0 || i == 11) {
+						Label label = new Label();
+						label.setStyle(BORDER);
+						label.setMinSize(25, 50);
+						root.setConstraints(label, i+offset, j);
+						root.getChildren().addAll(label);
+					} else {
+						if (j == 0 || j == 11) {
+							Label label = new Label();
+							label.setStyle(BORDER);
+							label.setMinSize(50, 25);
+							root.setConstraints(label, i+offset, j);
+							root.getChildren().addAll(label);
+						} else {
+							Label label = new Label();
+							if (boardInput[1].getCells()[i - 1][j - 1].getCellState() == cellState.SHIP) {
+								label.setStyle(SHIP_TILE_NOT_HIT);
+							}
+							if (boardInput[1].getCells()[i - 1][j - 1].getCellState() == cellState.EMPTY) {
+								label.setStyle(OCEAN_TILE_NOT_HIT);
+							}
+							if (boardInput[1].getCells()[i - 1][j - 1].getCellState() == cellState.MISS) {
+								label.setStyle(OCEAN_TILE_HIT);
+							}
+							if (boardInput[1].getCells()[i - 1][j - 1].getCellState() == cellState.HIT) {
+								label.setStyle(SHIP_TILE_HIT);
+							}
+							label.setMinSize(48, 48);
+							label.setAlignment(Pos.CENTER);
+							root.setConstraints(label, j+offset, i);
+							root.getChildren().addAll(label);
+						}
+					}
+				}
+			}
+		}
+		
+		root.setAlignment(Pos.CENTER);
 		Scene scene = new Scene(root, 1700, 900);
 		return scene;
 
 	}
 
-	public Board getBoard() {
+	public Board[] getBoard() {
 		return boardInput;
 	}
 }
