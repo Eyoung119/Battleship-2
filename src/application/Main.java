@@ -20,7 +20,7 @@ public class Main extends Application {
 			loader.setController(control);
 			Parent root = loader.load();
 			
-		    
+		primaryStage.setResizable(false);   
 	        Scene scene = new Scene(root, 359, 374);
 	    
 	        primaryStage.setTitle("Battleship 2: MORE");
