@@ -1,9 +1,10 @@
-package Viewer;
+package viewer;
 
+import application.Main;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import models.*;
+import models.Board;
 
 public class Viewer extends Application {
 private BattleShipSceneBuilder BS=new BattleShipSceneBuilder();
@@ -16,7 +17,11 @@ private static Board[] viewerBoard;
 		viewerBoard=b;
 		System.out.println(viewerBoard);
 		BS.passBoard(b);
-		launch("");
+		try {			
+			start(Main.getStage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
