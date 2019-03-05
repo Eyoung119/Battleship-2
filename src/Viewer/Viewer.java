@@ -2,28 +2,27 @@ package Viewer;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import models.*;
 
 public class Viewer extends Application {
 private BattleShipSceneBuilder BS=new BattleShipSceneBuilder();
-	public void run() {
+private static Board viewerBoard;
+
+
+//Create a viewer and pass in Board from run()
+//This will create a new window displaying the values
+	public void run(Board b) {
+		viewerBoard=b;
+		System.out.println(viewerBoard);
+		BS.passBoard(b);
 		launch("");
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
-		
-
-			primaryStage.setScene(BS.boards());
+			primaryStage.setScene(BS.boardDisplayTest(viewerBoard));
 			primaryStage.setTitle("BattleShip 2: More");
 			primaryStage.show();
 		} catch (Exception e) {
