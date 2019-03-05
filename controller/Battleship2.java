@@ -1,11 +1,13 @@
 package controllers;
 
 import java.io.File;
+import java.util.Optional;
 
 import javafx.application.Platform;
+import javafx.scene.control.TextInputDialog;
+import javafx.stage.FileChooser;
 import models.Board;
 import models.Player;
-import models.cellState;
 import viewer.Viewer;
 
 public class Battleship2 {
@@ -25,8 +27,25 @@ public class Battleship2 {
 	}
 	
 	public void startBtn() {
-		boards[0] = new Board();
-		boards[1] = new Board();
+		TextInputDialog player1Name = new TextInputDialog("Player 1");
+		 
+		player1Name.setHeaderText("Enter Player 1's Name:");
+		player1Name.setContentText("Name:");
+		Player p1 = new Player(player1Name.getContentText());
+		Optional<String> result = player1Name.showAndWait();
+		
+		TextInputDialog player2Name = new TextInputDialog("Player 2");
+		 
+		player2Name.setHeaderText("Enter Player 2's Name:");
+		player2Name.setContentText("Name:");
+		Player p2 = new Player(player1Name.getContentText());
+		Optional<String> result2 = player2Name.showAndWait();
+		
+		players[0] = p1;
+		players[1] = p2;
+		
+		boards[0] = new Board(players[0]);
+		boards[1] = new Board(players[1]);
 		try {
 			viewer.run(boards);			
 		} catch (Exception e) {
@@ -44,6 +63,10 @@ public class Battleship2 {
 	
 	public void saveGame() {
 		serializer.write(boards);
+	}
+	
+	public void loadGame(File file) {
+		boards = serializer.read(file);
 	}
 	
 	public void updateDisplay() {
