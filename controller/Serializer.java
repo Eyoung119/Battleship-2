@@ -12,7 +12,7 @@ import models.Board;
 public class Serializer {
 
 	
-	public void write(Board[] item) {
+	public void write(File file, Board[] item) {
 		File file = new File(".txt");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
