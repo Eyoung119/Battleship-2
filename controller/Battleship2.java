@@ -82,10 +82,6 @@ public class Battleship2 {
 		}
 	}
 
-	public void loadGame(File file) {
-		boards = serializer.read(file);
-	}
-
 	public void updateDisplay() {
 
 	}
