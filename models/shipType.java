@@ -1,6 +1,8 @@
 package models;
 
-public enum shipType {
+import java.io.Serializable;
+
+public enum shipType implements Serializable {
 
 	CARRIER, BATTLESHIP, CRUISER, SUBMARINE, DESTROYER
 }
