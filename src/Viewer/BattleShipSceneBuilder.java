@@ -1,4 +1,4 @@
-package Viewer;
+package viewer;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -89,6 +89,7 @@ public class BattleShipSceneBuilder {
 				}
 			}
 		}
+		
 		Label test = new Label();
 		test.setStyle("-fx-background-color: yellow");
 		test.setMinSize(25, 25);
@@ -140,14 +141,6 @@ public class BattleShipSceneBuilder {
 				}
 			}
 		}
-		Label P1Name=new Label(boardInput[0].getPlayer().getName());
-		P1Name.setMinSize(50, 50);
-		root.setConstraints(P1Name, 5, 14);
-		Label P2Name=new Label(boardInput[1].getPlayer().getName());
-		P1Name.setMinSize(50, 50);
-		root.setConstraints(P2Name, 20, 14);
-		root.getChildren().addAll(P1Name,P2Name);
-		
 		
 		root.setAlignment(Pos.CENTER);
 		Scene scene = new Scene(root, 1700, 900);
