@@ -31,15 +31,15 @@ public class Battleship2 {
 		 
 		player1Name.setHeaderText("Enter Player 1's Name:");
 		player1Name.setContentText("Name:");
-		Player p1 = new Player(player1Name.getContentText());
 		Optional<String> result = player1Name.showAndWait();
+		Player p1 = new Player(player1Name.getEditor().getText());
 		
 		TextInputDialog player2Name = new TextInputDialog("Player 2");
 		 
 		player2Name.setHeaderText("Enter Player 2's Name:");
 		player2Name.setContentText("Name:");
-		Player p2 = new Player(player1Name.getContentText());
 		Optional<String> result2 = player2Name.showAndWait();
+		Player p2 = new Player(player2Name.getEditor().getText());
 		
 		players[0] = p1;
 		players[1] = p2;
