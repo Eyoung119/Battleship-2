@@ -143,13 +143,19 @@ public class BattleShipSceneBuilder {
 				}
 			}
 		}
+		
 		Label P1Name=new Label(boardInput[0].getPlayer().getName());
 		P1Name.setMinSize(50, 50);
-		root.setConstraints(P1Name, 5, 14);
+		root.setConstraints(P1Name, 1, 14,5,1);
 		Label P2Name=new Label(boardInput[1].getPlayer().getName());
 		P1Name.setMinSize(50, 50);
-		root.setConstraints(P2Name, 20, 14,5, 1);
+		root.setConstraints(P2Name, numofsquares+3, 14,5, 1);
 		root.getChildren().addAll(P1Name,P2Name);
+		
+		Button saveBtn = new Button("Save");
+		root.setConstraints(saveBtn, numofsquares+1, 2);
+		root.getChildren().add(saveBtn);
+		
 		
 		Button saveBtn = new Button("Save");
 		root.setConstraints(saveBtn, numofsquares+1, 2);
