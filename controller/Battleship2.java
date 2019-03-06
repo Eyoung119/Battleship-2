@@ -71,7 +71,15 @@ public class Battleship2 {
 	}
 
 	public void saveGame() {
-		serializer.write(boards);
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save Game");
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT", "*.txt"));
+		fileChooser.setInitialDirectory(new File("saves"));
+		File saveFile = fileChooser.showSaveDialog(null);
+		
+		if (saveFile != null) {
+			serializer.write(saveFile, boards);
+		}
 	}
 
 	public void loadGame(File file) {
