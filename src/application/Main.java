@@ -1,6 +1,6 @@
 package application;
 
-import controllers.Battleship2;
+import controller.Battleship2;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +20,7 @@ public class Main extends Application {
 			loader.setController(control);
 			Parent root = loader.load();
 			
-		primaryStage.setResizable(false);   
+		    
 	        Scene scene = new Scene(root, 359, 374);
 	    
 	        primaryStage.setTitle("Battleship 2: MORE");
