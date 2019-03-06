@@ -164,7 +164,7 @@ public class BattleShipSceneBuilder {
 		saveBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				
+				Main.getControl().saveGame();
 			}
 		});
 		
