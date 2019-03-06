@@ -19,6 +19,7 @@ public class Battleship2 {
 	
 	public void loadBtn() {
 		FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT", "*.txt"));
 		fileChooser.setInitialDirectory(new File("saves"));
 		File file = fileChooser.showOpenDialog(null);
 		if (file != null) {			
