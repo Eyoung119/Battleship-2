@@ -1,6 +1,8 @@
 package models;
 
-public class Ship {
+import java.io.Serializable;
+
+public class Ship implements Serializable {
 	private shipType type;
 	private boolean isSunk = false;
 	private int length;
