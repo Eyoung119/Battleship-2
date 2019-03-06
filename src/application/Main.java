@@ -38,4 +38,8 @@ public class Main extends Application {
 	public static Stage getStage() {
 		return stage;
 	}
+	
+	public static Battleship2 getControl() {
+		return control;
+	}
 }
