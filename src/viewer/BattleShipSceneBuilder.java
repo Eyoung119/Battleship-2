@@ -155,10 +155,6 @@ public class BattleShipSceneBuilder {
 		root.setConstraints(P2Name, numofsquares+3, 14,5, 1);
 		root.getChildren().addAll(P1Name,P2Name);
 		
-		Button saveBtn = new Button("Save");
-		root.setConstraints(saveBtn, numofsquares+1, 2);
-		root.getChildren().add(saveBtn);
-		
 		
 		Button saveBtn = new Button("Save");
 		root.setConstraints(saveBtn, numofsquares+1, 2);
