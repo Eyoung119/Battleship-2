@@ -18,23 +18,6 @@ public class BattleShipSceneBuilder {
 	private final String OCEAN_TILE_HIT = "-fx-background-color: #99ccff";
 	private final String OCEAN_TILE_NOT_HIT = "-fx-background-color: #6699ff";
 
-	public Scene defaultScreen() {
-		VBox root = new VBox();
-		root.setAlignment(Pos.CENTER);
-		Label bulb = new Label();
-		bulb.setMinSize(1700, 900);
-		bulb.setStyle("-fx-background-color: black");
-		root.getChildren().addAll(bulb);
-
-		Label enemyBoardBackground = new Label();
-		// enemyBoardBackground.setX();
-
-		Label playerBoardBackground = new Label();
-		Scene scene = new Scene(root, 1700, 900);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		return scene;
-	}
-
 	int numofsquares = 12;
 	private Board[] boardInput;
 
