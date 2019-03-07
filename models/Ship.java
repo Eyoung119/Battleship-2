@@ -3,6 +3,10 @@ package models;
 import java.io.Serializable;
 
 public class Ship implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private shipType type;
 	private boolean isSunk = false;
 	private int length;
