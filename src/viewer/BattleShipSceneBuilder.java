@@ -167,6 +167,23 @@ public class BattleShipSceneBuilder {
 			}
 		});
 		
+		Button shootBtn = new Button("Shoot");
+		shootBtn.setAlignment(Pos.CENTER);
+		root.setConstraints(shootBtn, numofsquares + 1, 4);
+		root.getChildren().add(shootBtn);
+
+		shootBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				TextInputDialog shotname = new TextInputDialog("A1");
+				shotname.setHeaderText("Enter Coordinates:");
+				shotname.setContentText("Start");
+				Optional<String> result = shotname.showAndWait();
+				shotCall=shotname.getEditor().getText();
+			}
+		});
+
+		root.setStyle("-fx-background-color: #363940");
 		root.setAlignment(Pos.CENTER);
 		Scene scene = new Scene(root, 1700, 900);
 		return scene;
