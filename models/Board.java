@@ -3,7 +3,10 @@ package models;
 import java.io.Serializable;
 
 public class Board implements Serializable {
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Player player = null;
 	private Cell[][] cells = new Cell[10][10];
 	
