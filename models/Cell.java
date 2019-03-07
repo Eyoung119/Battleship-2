@@ -6,7 +6,7 @@ public class Cell implements Serializable {
 	private cellState state=cellState.EMPTY;
 //	SpriteMap sprite;
 	
-	public Cell(cellState state) {
+	public Cell() {
 		
 	}
 	
