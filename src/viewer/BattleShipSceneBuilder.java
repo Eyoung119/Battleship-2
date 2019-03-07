@@ -130,12 +130,12 @@ public class BattleShipSceneBuilder {
 		Label P1Name=new Label(boardInput[0].getPlayer().getName());
 		P1Name.setFont(new Font("Arial", 20));
 		P1Name.setMinSize(50, 50);
-		root.setConstraints(P1Name, 1, 14,5,1);
+		root.setConstraints(P1Name, 1, 14, 50, 1);
 		
 		Label P2Name=new Label(boardInput[1].getPlayer().getName());
 		P2Name.setFont(new Font("Arial", 20));
 		P2Name.setMinSize(50, 50);
-		root.setConstraints(P2Name, numofsquares+3, 14,5, 1);
+		root.setConstraints(P2Name, numofsquares+3, 14, 50, 1);
 		root.getChildren().addAll(P1Name,P2Name);
 		
 		
