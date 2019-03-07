@@ -5,6 +5,8 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
+private static Stage stage = new Stage();
+private static Battleship2 control = new Battleship2();
 
 public class Main extends Application {
 	@Override
@@ -22,5 +24,13 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	public static Stage getStage() {
+		return stage;
+	}
+	
+	public static Battleship2 getControl() {
+		return control;
 	}
 }
