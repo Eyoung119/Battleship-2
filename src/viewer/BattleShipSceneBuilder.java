@@ -38,14 +38,15 @@ public class BattleShipSceneBuilder {
 	public void passBoard(Board[] b) {
 		boardInput = b;
 		numofsquares = b[0].getCells().length + 2;
+		System.out.println("Initalizing Arrays...");
 		b1 = new int[b[0].getCells().length][b[0].getCells().length];
 		b2 = new int[b[0].getCells().length][b[0].getCells().length];
 	}
 
 	@SuppressWarnings({ "static-access" })
 	public Scene boardDisplayTest(Board[] boardInput) {
+		System.out.println("Building Display...");
 		GridPane root = new GridPane();
-		System.out.println(boardInput);
 		for (int i = 0; i < numofsquares; i++) {
 			for (int j = 0; j < numofsquares; j++) {
 				if ((i == 0 || i == numofsquares - 1) && (j == 0 || j == numofsquares - 1)) {
@@ -70,18 +71,7 @@ public class BattleShipSceneBuilder {
 							root.getChildren().addAll(label);
 						} else {
 							Label label = new Label();
-							if (boardInput[0].getCells()[i - 1][j - 1].getCellState() == cellState.SHIP) {
-								label.setStyle(SHIP_TILE_NOT_HIT);
-							}
-							if (boardInput[0].getCells()[i - 1][j - 1].getCellState() == cellState.EMPTY) {
-								label.setStyle(OCEAN_TILE_NOT_HIT);
-							}
-							if (boardInput[0].getCells()[i - 1][j - 1].getCellState() == cellState.MISS) {
-								label.setStyle(OCEAN_TILE_HIT);
-							}
-							if (boardInput[0].getCells()[i - 1][j - 1].getCellState() == cellState.HIT) {
-								label.setStyle(SHIP_TILE_HIT);
-							}
+							resetLabel(label,i,j);
 							label.setMinSize(48, 48);
 							label.setAlignment(Pos.CENTER);
 							root.setConstraints(label, j, i);
@@ -99,7 +89,7 @@ public class BattleShipSceneBuilder {
 											}
 										}
 									}
-									System.out.println(b1x+" "+b1y+" "+boardInput[0].getPlayer());
+									
 									//Put your click method here. Uncomment this method and put your own in.
 									//METHODNAME(int x, int y,boardInput[0].getPlayer());
 									
@@ -117,7 +107,7 @@ public class BattleShipSceneBuilder {
 								public void handle(MouseEvent event) {
 									label.setStyle(SHIP_TILE_HIT);
 									root.getChildren();
-									System.out.println(root.getChildren().indexOf(event.getSource()));
+									
 								}
 
 							});
@@ -126,18 +116,7 @@ public class BattleShipSceneBuilder {
 							label.setOnMouseExited(new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent event) {
-									if (boardInput[0].getCells()[x - 1][y - 1].getCellState() == cellState.SHIP) {
-										label.setStyle(SHIP_TILE_NOT_HIT);
-									}
-									if (boardInput[0].getCells()[x - 1][y - 1].getCellState() == cellState.EMPTY) {
-										label.setStyle(OCEAN_TILE_NOT_HIT);
-									}
-									if (boardInput[0].getCells()[x - 1][y - 1].getCellState() == cellState.MISS) {
-										label.setStyle(OCEAN_TILE_HIT);
-									}
-									if (boardInput[0].getCells()[x - 1][y - 1].getCellState() == cellState.HIT) {
-										label.setStyle(SHIP_TILE_HIT);
-									}
+									resetLabel(label,x,y);
 								}
 							});
 							root.getChildren().addAll(label);
@@ -147,6 +126,7 @@ public class BattleShipSceneBuilder {
 				}
 			}
 		}
+		System.out.println("Grid 1 Initalized...");
 		int offset = numofsquares + 2;
 		for (int i = 0; i < numofsquares; i++) {
 			for (int j = 0; j < numofsquares; j++) {
@@ -172,18 +152,7 @@ public class BattleShipSceneBuilder {
 							root.getChildren().addAll(label);
 						} else {
 							Label label = new Label();
-							if (boardInput[1].getCells()[i - 1][j - 1].getCellState() == cellState.SHIP) {
-								label.setStyle(SHIP_TILE_NOT_HIT);
-							}
-							if (boardInput[1].getCells()[i - 1][j - 1].getCellState() == cellState.EMPTY) {
-								label.setStyle(OCEAN_TILE_NOT_HIT);
-							}
-							if (boardInput[1].getCells()[i - 1][j - 1].getCellState() == cellState.MISS) {
-								label.setStyle(OCEAN_TILE_HIT);
-							}
-							if (boardInput[1].getCells()[i - 1][j - 1].getCellState() == cellState.HIT) {
-								label.setStyle(SHIP_TILE_HIT);
-							}
+							resetLabel(label,i,j);
 							label.setMinSize(48, 48);
 							label.setAlignment(Pos.CENTER);
 							root.setConstraints(label, j + offset, i);
@@ -201,7 +170,7 @@ public class BattleShipSceneBuilder {
 											}
 										}
 									}
-									System.out.println(b2x+" "+b2y+" "+boardInput[1].getPlayer());
+									
 									//Put your click method here. Uncomment this method and put your own in.
 									//METHODNAME(int x, int y,boardInput[1].getPlayer());
 									
@@ -212,8 +181,6 @@ public class BattleShipSceneBuilder {
 								@Override
 								public void handle(MouseEvent event) {
 									label.setStyle(SHIP_TILE_HIT);
-									root.getChildren();
-									System.out.println(root.getChildren().indexOf(event.getSource()));
 								}
 							});
 							x = i;
@@ -221,18 +188,7 @@ public class BattleShipSceneBuilder {
 							label.setOnMouseExited(new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent event) {
-									if (boardInput[0].getCells()[x - 1][y - 1].getCellState() == cellState.SHIP) {
-										label.setStyle(SHIP_TILE_NOT_HIT);
-									}
-									if (boardInput[0].getCells()[x - 1][y - 1].getCellState() == cellState.EMPTY) {
-										label.setStyle(OCEAN_TILE_NOT_HIT);
-									}
-									if (boardInput[0].getCells()[x - 1][y - 1].getCellState() == cellState.MISS) {
-										label.setStyle(OCEAN_TILE_HIT);
-									}
-									if (boardInput[0].getCells()[x - 1][y - 1].getCellState() == cellState.HIT) {
-										label.setStyle(SHIP_TILE_HIT);
-									}
+									resetLabel(label,x,y);
 								}
 							});
 							root.getChildren().addAll(label);
@@ -242,6 +198,7 @@ public class BattleShipSceneBuilder {
 				}
 			}
 		}
+		System.out.println("Grid 2 Initalized...");
 		Label P1Name = new Label(boardInput[0].getPlayer().getName());
 		P1Name.setFont(new Font("Arial", 20));
 		P1Name.setMinSize(50, 50);
@@ -254,6 +211,7 @@ public class BattleShipSceneBuilder {
 		P2Name.setTextFill(Color.ANTIQUEWHITE);
 		root.setConstraints(P2Name, numofsquares + 3, 14, 50, 1);
 		root.getChildren().addAll(P1Name, P2Name);
+		System.out.println("Initalizing Buttons...");
 
 		Button saveBtn = new Button(" Save ");
 		root.setConstraints(saveBtn, numofsquares + 1, 2);
@@ -287,6 +245,21 @@ public class BattleShipSceneBuilder {
 		Scene scene = new Scene(root, 1700, 900);
 		return scene;
 
+	}
+	
+	public void resetLabel(Label l,int i,int j) {
+		if (boardInput[1].getCells()[i - 1][j - 1].getCellState() == cellState.SHIP) {
+			l.setStyle(SHIP_TILE_NOT_HIT);
+		}
+		if (boardInput[1].getCells()[i - 1][j - 1].getCellState() == cellState.EMPTY) {
+			l.setStyle(OCEAN_TILE_NOT_HIT);
+		}
+		if (boardInput[1].getCells()[i - 1][j - 1].getCellState() == cellState.MISS) {
+			l.setStyle(OCEAN_TILE_HIT);
+		}
+		if (boardInput[1].getCells()[i - 1][j - 1].getCellState() == cellState.HIT) {
+			l.setStyle(SHIP_TILE_HIT);
+		}
 	}
 
 	public String getShotCall() {
