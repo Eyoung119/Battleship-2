@@ -7,13 +7,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import models.Board;
 
 public class Serializer {
 
 	
 	public void write(File file, Board[] item) {
-		File file = new File(".txt");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
@@ -25,14 +26,28 @@ public class Serializer {
 			oos.writeObject(item);
 		}
 		catch(Exception e) {
-			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Load Game");
+			alert.setHeaderText(null);
+			alert.setContentText("There was an exception while saving the game.");
+			alert.showAndWait();
+			e.printStackTrace();
 		}
 		finally {
-			try {				
+			try {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Save Game");
+				alert.setHeaderText(null);
+				alert.setContentText("Game saved succesfully!");
+				alert.showAndWait();
 				fos.close();
 				oos.close();
 			} catch (IOException ioe) {
-				System.out.println("There was an IOException, RIP.");
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Load Game");
+				alert.setHeaderText(null);
+				alert.setContentText("There was an exception while saving the game.");
+				alert.showAndWait();
 				ioe.printStackTrace();
 			}
 		}
