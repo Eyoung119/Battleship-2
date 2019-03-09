@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Optional;
 
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.FileChooser;
 import models.Board;
@@ -19,10 +21,27 @@ public class Battleship2 {
 
 	public void loadBtn() {
 		FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT", "*.txt"));
 		fileChooser.setInitialDirectory(new File("saves"));
 		File file = fileChooser.showOpenDialog(null);
-		if (file != null) {
+		if (file != null) {			
 			boards = serializer.read(file);
+			try {
+				shotCon = new ShotController(boards);
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Load Game");
+				alert.setHeaderText(null);
+				alert.setContentText("Game loaded succesfully!");
+				alert.showAndWait();
+				viewer.run(boards);			
+			} catch (Exception e) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Load Game");
+				alert.setHeaderText(null);
+				alert.setContentText("There was an exception while loading the game.");
+				alert.showAndWait();
+				e.printStackTrace();
+			}
 		}
 	}
 
