@@ -1,11 +1,12 @@
 package models;
 
-public class Cell {
-	private cellState state;
+import java.io.Serializable;
+
+public class Cell implements Serializable {
+	private cellState state = cellState.EMPTY;
 //	SpriteMap sprite;
 	
-	public Cell(cellState state) {
-		setCellState(state);
+	public Cell() {
 	}
 	
 	public cellState getCellState() {
@@ -14,5 +15,10 @@ public class Cell {
 	
 	public void setCellState(cellState state) {
 		this.state = state;
+	}
+	
+	@Override
+	public String toString() {
+		return state.toString();
 	}
 }

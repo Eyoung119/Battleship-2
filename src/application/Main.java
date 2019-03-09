@@ -1,6 +1,6 @@
 package application;
 
-import controller.Battleship2;
+import controllers.Battleship2;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	private static Stage stage = new Stage();
-	private Battleship2 control = new Battleship2();
+	private static Battleship2 control = new Battleship2();
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -25,6 +25,7 @@ public class Main extends Application {
 	    
 	        primaryStage.setTitle("Battleship 2: MORE");
 	        primaryStage.setScene(scene);
+	        primaryStage.setResizable(false);
 	        primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
