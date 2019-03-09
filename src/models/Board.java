@@ -3,10 +3,17 @@ package models;
 import java.io.Serializable;
 
 public class Board implements Serializable {
+	
+	private Player player;
 	private Cell[][] cells = new Cell[10][10];
 	
-	public Board() {
-		
+	public Board(Player player) {
+		setPlayer(player);
+		for (int x = 0; x < cells.length; x++) {
+			for (int y = 0; y < cells[x].length; y++) {
+				cells[x][y] = new Cell();
+			}
+		}
 	}
 	
 	public Cell[][] getCells() {
@@ -14,12 +21,15 @@ public class Board implements Serializable {
 	}
 	
 	public void placeShips() {
-		for (Cell[] x : cells) {
-			for (Cell y : x) {
-				y = new Cell(cellState.EMPTY);
-			}
-		}
 		//This method is INCOMPLETE!!!
 		//When GUI is finished, complete logic for placing ships.
+	}
+	
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 }
