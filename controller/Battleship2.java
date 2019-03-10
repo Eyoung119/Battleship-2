@@ -182,6 +182,43 @@ public class Battleship2 {
 			serializer.write(saveFile, boards);
 		}
 	}
+	
+	public int gridSize() {
+		
+		ArrayList<String> sizes = new ArrayList<>();
+		sizes.add("10x10");
+		sizes.add("11x11");
+		sizes.add("12x12");
+		sizes.add("13x13");
+		sizes.add("14x14");
+		sizes.add("15x15");
+		
+		ChoiceDialog<String> gridSize = new ChoiceDialog<>("10x10", sizes);
+		
+		gridSize.setTitle("Grid Size");
+		gridSize.setHeaderText(null);
+		gridSize.setContentText("Select the size of your grid:");
+		Optional<String> test = gridSize.showAndWait();
+		
+		int sizeOfGrid = 1;
+		
+		if(test.get() == "10x10") {
+			sizeOfGrid = 1;
+		} else if(test.get() == "11x11") {
+			sizeOfGrid = 2;
+		} else if(test.get() == "12x12") {
+			sizeOfGrid = 3;
+		} else if(test.get() == "13x13") {
+			sizeOfGrid = 4;
+		} else if(test.get() == "14x14") {
+			sizeOfGrid = 5;
+		} else if(test.get() == "15x15") {
+			sizeOfGrid = 6;
+		}
+		
+		return sizeOfGrid;
+		
+	}
 
 	public void placeShip(String ship, int size, int player) {
 		ArrayList<Character> letters = new ArrayList<>();
