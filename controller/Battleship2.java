@@ -36,7 +36,8 @@ public class Battleship2 {
 				alert.setHeaderText(null);
 				alert.setContentText("Game loaded succesfully!");
 				alert.showAndWait();
-				viewer.run(boards);
+				viewer.run(boards, boards[0].getTurn() % 2);
+				takeTurn();
 			} catch (Exception e) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Load Game");
@@ -67,7 +68,9 @@ public class Battleship2 {
 		players[1] = p2;
 
 		boards[0] = new Board(players[0]);
+		boards[0].setTurn(0);
 		boards[1] = new Board(players[1]);
+		boards[1].setTurn(0);
 		try {
 			shotCon = new ShotController(boards);
 
@@ -78,7 +81,8 @@ public class Battleship2 {
 				placeShip("Submarine", 3, x);
 				placeShip("Destroyer", 2, x);
 			}
-			viewer.run(boards);
+			viewer.run(boards, 0);
+			takeTurn();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -89,7 +93,82 @@ public class Battleship2 {
 	}
 
 	public void takeTurn() {
-		System.out.println("Test");
+		boolean done = false;
+		ArrayList<String> attacks = new ArrayList<>();
+		attacks.add("Shot");
+		attacks.add("Spy Plane");
+		attacks.add("Mortar");
+		attacks.add("Missile Barrage");
+		attacks.add("Sonar");
+		attacks.add("Double Shot");
+		ArrayList<Character> letters = new ArrayList<>();
+		for (int i = 65; i < 75; i++) {
+			Character y = (char) i;
+			letters.add(y);
+		}
+		ArrayList<Integer> numbers = new ArrayList<>();
+		for (int i = 1; i < 11; i++) {
+			numbers.add(i);
+		}
+		do { 
+			int x = 0;
+			int y = 0;
+			String attack = null;
+			ChoiceDialog<String> dialog0 = new ChoiceDialog<>("Shot", attacks);
+			dialog0.setTitle("Choose Attack");
+			dialog0.setTitle(null);
+			dialog0.setContentText("Select the attack you wish to use:");
+			Optional<String> result2 = dialog0.showAndWait();
+			if (result2.isPresent()) {
+				attack = result2.get();
+			}
+			switch (attack) {
+				case "Shot":
+					do {
+						ChoiceDialog<Character> dialog = new ChoiceDialog<>('A', letters);
+						dialog.setTitle("Shoot");
+						dialog.setHeaderText(null);
+						dialog.setContentText("Select the first coordinate for your shot:");
+						Optional<Character> result3 = dialog.showAndWait();
+						if (result3.isPresent()) {
+							x = result3.get() - 64;
+						}
+						
+						ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
+						dialog2.setTitle("Select");
+						dialog2.setHeaderText(null);
+						dialog2.setContentText("Select the second coordinate for your shot:");
+						Optional<Integer> result4 = dialog2.showAndWait();
+						if (result4.isPresent()) {
+							y = result4.get();
+						}
+					} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.HIT || boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.MISS);
+					x--;
+					y--;
+					done = shotCon.shot(boards[0].getTurn() % 2, x, y);
+					break;
+				case "Spy Plane":
+					
+					break;
+					
+				case "Mortar":
+					
+					break;
+				case "Missile Barrage":
+					
+					break;
+				case "Sonar":
+					
+					break;
+				case "Double Shot":
+					
+					break;
+							
+			} 
+			boards[0].setTurn(boards[0].getTurn() + 1);
+			boards[1].setTurn(boards[1].getTurn() + 1);
+			viewer.run(boards, boards[0].getTurn() % 2);
+		} while (!done);
 	}
 
 	public void saveGame() {
@@ -102,10 +181,6 @@ public class Battleship2 {
 		if (saveFile != null) {
 			serializer.write(saveFile, boards);
 		}
-	}
-
-	public void updateDisplay() {
-		
 	}
 
 	public void placeShip(String ship, int size, int player) {
