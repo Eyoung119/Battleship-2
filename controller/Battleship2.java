@@ -81,7 +81,7 @@ public class Battleship2 {
 						letter.add(y);
 					}
 					ArrayList<Integer> number = new ArrayList<Integer>();
-					for (int i = 65; i < 75; i++) {
+					for (int i = 1; i < 11; i++) {
 						number.add(i);
 					}
 					ArrayList<String> orientations = new ArrayList<String>();
