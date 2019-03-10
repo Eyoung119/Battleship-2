@@ -31,4 +31,8 @@ public class Player implements Serializable {
 	public HashMap<String, Ship> getShips() {
 		return ships;
 	}
+	
+	public boolean shipsSunk() {
+		return ships.get("Carrier").isSunk() && ships.get("Battleship").isSunk() && ships.get("Cruiser").isSunk() && ships.get("Submarine").isSunk() && ships.get("Destroyer").isSunk();
+	}
 }
