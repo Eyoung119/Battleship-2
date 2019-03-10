@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.Random;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import models.Board;
 import models.Cell;
 import models.cellState;
@@ -14,7 +16,7 @@ public class ShotController {
 		setBoards(boards);
 	}
 	
-	public void setBoards(Board[] boards) {
+	private void setBoards(Board[] boards) {
 		this.boards = boards;
 	}
 	
@@ -22,15 +24,32 @@ public class ShotController {
 		this.currentPlayer = currentPlayer;
 	}
 	
-	public void shot (int currentPlayer, int x, int y) {
+	public boolean shot (int currentPlayer, int x, int y) {
 		setCurrentPlayer(currentPlayer);
 		int enemy = currentPlayer == 0 ? 1 : 0;
 		if (boards[enemy].getCells()[x][y].getCellState() == cellState.SHIP) {
 			boards[enemy].getCells()[x][y].setCellState(cellState.HIT);
+			boards[enemy].getFilter()[x][y].setCellState(cellState.HIT);
 			boards[enemy].getCells()[x][y].getShip().setLength(boards[enemy].getCells()[x][y].getShip().getLength() - 1);
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Shot");
+			alert.setHeaderText(null);
+			alert.setContentText("Hit!");
+			alert.showAndWait();
 		} else {
-			boards[enemy].getCells()[x][y].setCellState(cellState.MISS);
+			boards[enemy].getFilter()[x][y].setCellState(cellState.MISS);
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Shot");
+			alert.setHeaderText(null);
+			alert.setContentText("Miss!");
+			alert.showAndWait();
 		}
+		boolean win = false;
+		if (boards[enemy].getPlayer().shipsSunk()) {
+			win = true;
+		}
+		
+		return win;
 	}
 	
 	public boolean spyPlane (int currentPlayer, Cell[] cells) {
@@ -43,21 +62,35 @@ public class ShotController {
 		return false;
 	}
 	
-	public void mortarStrike (int currentPlayer, int x1, int x2, int y1, int y2) {
+	public boolean mortarStrike (int currentPlayer, int x1, int x2, int y1, int y2) {
 		setCurrentPlayer(currentPlayer);
-		shot(currentPlayer, x1, y1);
-		shot(currentPlayer, x1, y2);
-		shot(currentPlayer, x2, y1);
-		shot(currentPlayer, x2, y2);
+		if (shot(currentPlayer, x1, y1)) {
+			return true;
+		} else if (shot(currentPlayer, x1, y2)) {
+			return true;
+		} else if (shot(currentPlayer, x2, y1)) {
+			return true;
+		} else if (shot(currentPlayer, x2, y2)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
-	public void missileBarrage (int currentPlayer, int x, int y) {
+	public boolean missileBarrage (int currentPlayer, int x, int y) {
 		Random rng = new Random();
 		setCurrentPlayer(currentPlayer);
-		shot(currentPlayer, x, y);
-		shot(currentPlayer, rng.nextInt(10), rng.nextInt(10));
-		shot(currentPlayer, rng.nextInt(10), rng.nextInt(10));
-		shot(currentPlayer, rng.nextInt(10), rng.nextInt(10));
+		if (shot(currentPlayer, x, y)) {
+			return true;
+		} else if (shot(currentPlayer, rng.nextInt(10), rng.nextInt(10))) {
+			return true;
+		} else if (shot(currentPlayer, rng.nextInt(10), rng.nextInt(10))) {
+			return true;
+		} else if (shot(currentPlayer, rng.nextInt(10), rng.nextInt(10))) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public int sonar (int currentPlayer, int x, int y) {
@@ -75,9 +108,14 @@ public class ShotController {
 		return numShips;
 	}
 	
-	public void doubleShot (int currentPlayer, int x1, int x2, int y1, int y2) {
+	public boolean doubleShot (int currentPlayer, int x1, int x2, int y1, int y2) {
 		setCurrentPlayer(currentPlayer);
-		shot(currentPlayer, x1, y1);
-		shot(currentPlayer, x2, y2);
-	}
+		if (shot(currentPlayer, x1, y1)) {
+			return true;
+		} else if (shot(currentPlayer, x2, y2)) {
+			return true;
+		} else {
+			return false;
+		}
+ 	}
 }
