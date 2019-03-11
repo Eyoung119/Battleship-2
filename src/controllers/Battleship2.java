@@ -323,10 +323,17 @@ public class Battleship2 {
 					break;
 							
 			} 
-			boards[0].setTurn(boards[0].getTurn() + 1);
-			boards[1].setTurn(boards[0].getTurn());
-			viewer.run(boards, boards[0].getTurn() % 2);
+			viewer.passPlayer();
+			
 		} while (!done);
+	}
+
+	public void swapturns() {
+		
+			boards[0].setTurn(boards[0].getTurn() + 1);
+			boards[1].setTurn(boards[1].getTurn() + 1);
+			viewer.run(boards, boards[0].getTurn() % 2);
+		
 	}
 
 	public void saveGame() {
