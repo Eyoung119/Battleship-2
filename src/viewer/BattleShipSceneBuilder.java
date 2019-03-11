@@ -89,26 +89,26 @@ public class BattleShipSceneBuilder {
 							label.setOnMouseClicked(new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent event) {
-									int b1x=0;
-									int b1y=0;
+									int b1x = 0;
+									int b1y = 0;
 									for (int i = 0; i < b1.length; i++) {
-										for (int j = 0; j <b1[i].length; j++) {
-											if(root.getChildren().indexOf(event.getSource())==b1[i][j]) {
-												b1x=i;
-												b1y=j;
+										for (int j = 0; j < b1[i].length; j++) {
+											if (root.getChildren().indexOf(event.getSource()) == b1[i][j]) {
+												b1x = i;
+												b1y = j;
 											}
 										}
 									}
-									System.out.println(b1x+" "+b1y+" "+boardInput[0].getPlayer());
-									//Put your click method here. Uncomment this method and put your own in.
-									//METHODNAME(int x, int y,boardInput[0].getPlayer());
-									
-									//dont forget about the second array
+									System.out.println(b1x + " " + b1y + " " + boardInput[0].getPlayer());
+									// Put your click method here. Uncomment this method and put your own in.
+									// METHODNAME(int x, int y,boardInput[0].getPlayer());
+
+									// dont forget about the second array
 									// |
 									// |
 									// |
 									// V
-									
+
 								}
 							});
 
@@ -172,16 +172,20 @@ public class BattleShipSceneBuilder {
 							root.getChildren().addAll(label);
 						} else {
 							Label label = new Label();
-							if (boardInput[currentPlayer == 0 ? 1 : 0].getFilter()[i - 1][j - 1].getCellState() == cellState.SHIP) {
+							if (boardInput[currentPlayer == 0 ? 1 : 0].getFilter()[i - 1][j - 1]
+									.getCellState() == cellState.SHIP) {
 								label.setStyle(SHIP_TILE_NOT_HIT);
 							}
-							if (boardInput[currentPlayer == 0 ? 1 : 0].getFilter()[i - 1][j - 1].getCellState() == cellState.EMPTY) {
+							if (boardInput[currentPlayer == 0 ? 1 : 0].getFilter()[i - 1][j - 1]
+									.getCellState() == cellState.EMPTY) {
 								label.setStyle(OCEAN_TILE_NOT_HIT);
 							}
-							if (boardInput[currentPlayer == 0 ? 1 : 0].getFilter()[i - 1][j - 1].getCellState() == cellState.MISS) {
+							if (boardInput[currentPlayer == 0 ? 1 : 0].getFilter()[i - 1][j - 1]
+									.getCellState() == cellState.MISS) {
 								label.setStyle(OCEAN_TILE_HIT);
 							}
-							if (boardInput[currentPlayer == 0 ? 1 : 0].getFilter()[i - 1][j - 1].getCellState() == cellState.HIT) {
+							if (boardInput[currentPlayer == 0 ? 1 : 0].getFilter()[i - 1][j - 1]
+									.getCellState() == cellState.HIT) {
 								label.setStyle(SHIP_TILE_HIT);
 							}
 							label.setMinSize(48, 48);
@@ -191,20 +195,20 @@ public class BattleShipSceneBuilder {
 							label.setOnMouseClicked(new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent event) {
-									int b2x=0;
-									int b2y=0;
+									int b2x = 0;
+									int b2y = 0;
 									for (int i = 0; i < b2.length; i++) {
-										for (int j = 0; j <b2[i].length; j++) {
-											if(root.getChildren().indexOf(event.getSource())==b2[i][j]) {
-												b2x=i;
-												b2y=j;
+										for (int j = 0; j < b2[i].length; j++) {
+											if (root.getChildren().indexOf(event.getSource()) == b2[i][j]) {
+												b2x = i;
+												b2y = j;
 											}
 										}
 									}
-									System.out.println(b2x+" "+b2y+" "+boardInput[1].getPlayer());
-									//Put your click method here. Uncomment this method and put your own in.
-									//METHODNAME(int x, int y,boardInput[1].getPlayer());
-									
+									System.out.println(b2x + " " + b2y + " " + boardInput[1].getPlayer());
+									// Put your click method here. Uncomment this method and put your own in.
+									// METHODNAME(int x, int y,boardInput[1].getPlayer());
+
 								}
 							});
 //
@@ -266,11 +270,39 @@ public class BattleShipSceneBuilder {
 			}
 		});
 
+		Button shootBtn = new Button("Shoot");
+		root.setConstraints(shootBtn, numofsquares + 1, 4);
+		root.getChildren().add(shootBtn);
+
+		shootBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
 		root.setStyle("-fx-background-color: #363940");
 		root.setAlignment(Pos.CENTER);
 		Scene scene = new Scene(root, 1700, 900);
 		return scene;
+}
+	
+	public Scene passPlayer() {
+		VBox root = new VBox();
+		Label label = new Label("Please Pass Your Turn. You have eight seconds to.");
+		label.setMinSize(400, 400);
+		label.setAlignment(Pos.CENTER);
+		label.setStyle(OCEAN_TILE_HIT);
 
+		label.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+			}
+		});
+		root.getChildren().add(label);
+		root.setStyle("-fx-background-color: #363940");
+		root.setAlignment(Pos.CENTER);
+		Scene scene = new Scene(root, 1700, 900);
+		return scene;
 	}
 
 	public String getShotCall() {

@@ -3,6 +3,7 @@ package viewer;
 import application.Main;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.Board;
 
@@ -10,6 +11,7 @@ public class Viewer extends Application {
 private BattleShipSceneBuilder BS=new BattleShipSceneBuilder();
 private static Board[] viewerBoard;
 private static int currentPlayer;
+Scene activeScene=null;
 
 
 //Create a viewer and pass in Board from run()
@@ -19,17 +21,30 @@ private static int currentPlayer;
 		System.out.println(viewerBoard);
 		this.currentPlayer = currentPlayer;
 		BS.passBoard(b);
-		try {			
+		activeScene =BS.boardDisplayTest(viewerBoard, currentPlayer);
+		try {
 			start(Main.getStage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public void passPlayer() throws InterruptedException {
+		activeScene=BS.passPlayer();
+		try {			
+			start(Main.getStage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Thread.sleep(8000);
+		Main.getControl().swapturns();
+	}
+	
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
-			primaryStage.setScene(BS.boardDisplayTest(viewerBoard, currentPlayer));
+			primaryStage.setScene(activeScene);
 			primaryStage.setTitle("BattleShip 2: More");
 			primaryStage.setMaximized(true);
 			primaryStage.show();
@@ -38,5 +53,5 @@ private static int currentPlayer;
 			Platform.exit();
 		}
 	}
-
+	
 }

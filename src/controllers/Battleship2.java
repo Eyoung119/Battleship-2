@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.FileChooser;
 import models.Board;
@@ -74,7 +75,7 @@ public class Battleship2 {
 		boards[1].setTurn(0);
 		try {
 			shotCon = new ShotController(boards);
-
+			viewer.run(boards, 0);
 			for (int x = 0; x < 2; x++) {
 				placeShip("Carrier", 5, x);
 				placeShip("Battleship", 4, x);
@@ -82,7 +83,7 @@ public class Battleship2 {
 				placeShip("Submarine", 3, x);
 				placeShip("Destroyer", 2, x);
 			}
-			viewer.run(boards, 0);
+			
 			takeTurn();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,7 +94,7 @@ public class Battleship2 {
 		Platform.exit();
 	}
 
-	public void takeTurn() {
+	public void takeTurn() throws InterruptedException {
 		boolean done = false;
 		ArrayList<Character> spyPlane = new ArrayList<>();
 		ArrayList<String> attacks = new ArrayList<>();
@@ -114,7 +115,8 @@ public class Battleship2 {
 			numbers.add(i);
 			spyPlane.add((char) (i + 48));
 		}
-		do { 
+		do {
+		
 			int x = 0;
 			int y = 0;
 			String attack = null;
@@ -127,87 +129,101 @@ public class Battleship2 {
 				attack = result2.get();
 			}
 			switch (attack) {
-				case "Shot":
-					do {
-						ChoiceDialog<Character> dialog = new ChoiceDialog<>('A', letters);
-						dialog.setTitle("Shoot");
-						dialog.setHeaderText(null);
-						dialog.setContentText("Select the first coordinate for your shot:");
-						Optional<Character> result3 = dialog.showAndWait();
-						if (result3.isPresent()) {
-							x = result3.get() - 64;
-						}
-						
-						ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
-						dialog2.setTitle("Select");
-						dialog2.setHeaderText(null);
-						dialog2.setContentText("Select the second coordinate for your shot:");
-						Optional<Integer> result4 = dialog2.showAndWait();
-						if (result4.isPresent()) {
-							y = result4.get();
-						}
-					} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.HIT || boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.MISS);
-					x--;
-					y--;
-					done = shotCon.shot(boards[0].getTurn() % 2, x, y);
-					break;
-				case "Spy Plane":
-					Character colRow = null;
-					ChoiceDialog<Character> dialog = new ChoiceDialog<>('A', spyPlane);
-					dialog.setTitle("Spy Plane");
+			case "Shot":
+				do {
+					ChoiceDialog<Character> dialog = new ChoiceDialog<>('A', letters);
+					dialog.setTitle("Shoot");
 					dialog.setHeaderText(null);
-					dialog.setContentText("Select the column or row you wish to check:");
+					dialog.setContentText("Select the first coordinate for your shot:");
 					Optional<Character> result3 = dialog.showAndWait();
 					if (result3.isPresent()) {
-						colRow = result3.get();
+						x = result3.get() - 64;
 					}
-					if (colRow >= 65) {
-						shotCon.spyPlane(boards[0].getTurn() % 2, boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getCells()[colRow - 64]);
-					} else {
-						Cell[] spy = new Cell[10];
-						for (int i = 0; i < spy.length; i++) {
-							spy[i] = boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getCells()[i][colRow - 48];
-						}
-						shotCon.spyPlane(boards[0].getTurn() % 2, spy);
+
+					ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
+					dialog2.setTitle("Select");
+					dialog2.setHeaderText(null);
+					dialog2.setContentText("Select the second coordinate for your shot:");
+					Optional<Integer> result4 = dialog2.showAndWait();
+					if (result4.isPresent()) {
+						y = result4.get();
 					}
-					break;
-					
-				case "Mortar":
-					do {
-						ChoiceDialog<Character> dialog1 = new ChoiceDialog<>('A', letters);
-						dialog1.setTitle("Mortar");
-						dialog1.setHeaderText(null);
-						dialog1.setContentText("Select the first coordinate for your shot:");
-						Optional<Character> result1 = dialog1.showAndWait();
-						if (result1.isPresent()) {
-							x = result1.get() - 64;
-						}
-						
-						ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
-						dialog2.setTitle("Mortar");
-						dialog2.setHeaderText(null);
-						dialog2.setContentText("Select the second coordinate for your shot:");
-						Optional<Integer> result4 = dialog2.showAndWait();
-						if (result4.isPresent()) {
-							y = result4.get();
-						}
-					} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.HIT || boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.MISS);
-					break;
-				case "Missile Barrage":
-					
-					break;
-				case "Sonar":
-					
-					break;
-				case "Double Shot":
-					
-					break;
-							
-			} 
+				} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+						.getCellState() == cellState.HIT
+						|| boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+								.getCellState() == cellState.MISS);
+				x--;
+				y--;
+				done = shotCon.shot(boards[0].getTurn() % 2, x, y);
+				break;
+			case "Spy Plane":
+				Character colRow = null;
+				ChoiceDialog<Character> dialog = new ChoiceDialog<>('A', spyPlane);
+				dialog.setTitle("Spy Plane");
+				dialog.setHeaderText(null);
+				dialog.setContentText("Select the column or row you wish to check:");
+				Optional<Character> result3 = dialog.showAndWait();
+				if (result3.isPresent()) {
+					colRow = result3.get();
+				}
+				if (colRow >= 65) {
+					shotCon.spyPlane(boards[0].getTurn() % 2,
+							boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getCells()[colRow - 64]);
+				} else {
+					Cell[] spy = new Cell[10];
+					for (int i = 0; i < spy.length; i++) {
+						spy[i] = boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getCells()[i][colRow - 48];
+					}
+					shotCon.spyPlane(boards[0].getTurn() % 2, spy);
+				}
+				break;
+
+			case "Mortar":
+				do {
+					ChoiceDialog<Character> dialog1 = new ChoiceDialog<>('A', letters);
+					dialog1.setTitle("Mortar");
+					dialog1.setHeaderText(null);
+					dialog1.setContentText("Select the first coordinate for your shot:");
+					Optional<Character> result1 = dialog1.showAndWait();
+					if (result1.isPresent()) {
+						x = result1.get() - 64;
+					}
+
+					ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
+					dialog2.setTitle("Mortar");
+					dialog2.setHeaderText(null);
+					dialog2.setContentText("Select the second coordinate for your shot:");
+					Optional<Integer> result4 = dialog2.showAndWait();
+					if (result4.isPresent()) {
+						y = result4.get();
+					}
+				} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+						.getCellState() == cellState.HIT
+						|| boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+								.getCellState() == cellState.MISS);
+				break;
+			case "Missile Barrage":
+
+				break;
+			case "Sonar":
+
+				break;
+			case "Double Shot":
+
+				break;
+
+			}
+			viewer.passPlayer();
+			
+		} while (!done);
+	}
+
+	public void swapturns() {
+		
 			boards[0].setTurn(boards[0].getTurn() + 1);
 			boards[1].setTurn(boards[1].getTurn() + 1);
 			viewer.run(boards, boards[0].getTurn() % 2);
-		} while (!done);
+		
 	}
 
 	public void saveGame() {
@@ -241,7 +257,7 @@ public class Battleship2 {
 		int shipY = 0;
 		boolean isValid;
 		String orientation = null;
-		
+
 		do {
 			ChoiceDialog<Character> dialog = new ChoiceDialog<>('A', letters);
 			shipX = 0;
@@ -252,7 +268,7 @@ public class Battleship2 {
 			if (result3.isPresent()) {
 				shipX = result3.get() - 64;
 			}
-			
+
 			ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
 			shipY = 0;
 			dialog2.setTitle(players[player].getName() + "'s " + ship);
@@ -262,7 +278,7 @@ public class Battleship2 {
 			if (result4.isPresent()) {
 				shipY = result4.get();
 			}
-			
+
 			ChoiceDialog<String> dialog3 = new ChoiceDialog<>("Left", orientations);
 			dialog3.setTitle(players[player].getName() + "'s " + ship);
 			dialog3.setHeaderText(null);
@@ -279,7 +295,7 @@ public class Battleship2 {
 					if (shipX - (size - 1) < 1) {
 						isValid = false;
 					}
-					try {						
+					try {
 						for (int x = 0; x < size; x++) {
 							if (boards[player].getCells()[shipX - x][shipY].getCellState() == cellState.SHIP) {
 								isValid = false;
@@ -293,7 +309,7 @@ public class Battleship2 {
 					if (shipX + (size - 1) > 10) {
 						isValid = false;
 					}
-					try {						
+					try {
 						for (int x = 0; x < size; x++) {
 							if (boards[player].getCells()[shipX + x][shipY].getCellState() == cellState.SHIP) {
 								isValid = false;
@@ -307,7 +323,7 @@ public class Battleship2 {
 					if (shipY - (size - 1) < 1) {
 						isValid = false;
 					}
-					try {						
+					try {
 						for (int x = 0; x < size; x++) {
 							if (boards[player].getCells()[shipX][shipY - x].getCellState() == cellState.SHIP) {
 								isValid = false;
@@ -321,7 +337,7 @@ public class Battleship2 {
 					if (shipY + (size - 1) > 10) {
 						isValid = false;
 					}
-					try {						
+					try {
 						for (int x = 0; x < size; x++) {
 							if (boards[player].getCells()[shipX][shipY + x].getCellState() == cellState.SHIP) {
 								isValid = false;
@@ -333,29 +349,30 @@ public class Battleship2 {
 					break;
 				}
 			}
-		}while(!isValid);switch(orientation)
+		} while (!isValid);
+		switch (orientation)
 
-	{
+		{
 		case "Up":
-			for (int i = 0; i < size; i++) {				
+			for (int i = 0; i < size; i++) {
 				boards[player].getCells()[shipX - i][shipY].setCellState(cellState.SHIP);
 				boards[player].getCells()[shipX - i][shipY].setShip(players[0].getShips().get(ship));
 			}
 			break;
 		case "Down":
-			for (int i = 0; i < size; i++) {				
+			for (int i = 0; i < size; i++) {
 				boards[player].getCells()[shipX + i][shipY].setCellState(cellState.SHIP);
 				boards[player].getCells()[shipX + i][shipY].setShip(players[0].getShips().get(ship));
 			}
 			break;
 		case "Left":
-			for (int i = 0; i < size; i++) {				
+			for (int i = 0; i < size; i++) {
 				boards[player].getCells()[shipX][shipY - i].setCellState(cellState.SHIP);
 				boards[player].getCells()[shipX][shipY - i].setShip(players[0].getShips().get(ship));
 			}
 			break;
 		case "Right":
-			for (int i = 0; i < size; i++) {				
+			for (int i = 0; i < size; i++) {
 				boards[player].getCells()[shipX][shipY + i].setCellState(cellState.SHIP);
 				boards[player].getCells()[shipX][shipY + i].setShip(players[0].getShips().get(ship));
 			}
