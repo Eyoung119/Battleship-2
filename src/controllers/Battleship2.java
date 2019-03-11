@@ -345,6 +345,8 @@ public class Battleship2 {
 				break;
 
 			}
+			Alert alert = new Alert(AlertType.CONFIRMATION,"Pass Your Turn Now");
+			alert.showAndWait();
 			boards[0].setTurn(boards[0].getTurn() + 1);
 			boards[1].setTurn(boards[0].getTurn());
 			viewer.run(boards, boards[0].getTurn() % 2);
