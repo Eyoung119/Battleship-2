@@ -115,7 +115,7 @@ public class Battleship2 {
 			numbers.add(i);
 			spyPlane.add((char) (i + 48));
 		}
-		do { 
+		do {
 			int x = 0;
 			int y = 0;
 			int x2 = 0;
@@ -130,201 +130,224 @@ public class Battleship2 {
 				attack = result2.get();
 			}
 			switch (attack) {
-				case "Shot":
-					do {
-						ChoiceDialog<Character> dialog = new ChoiceDialog<>('A', letters);
-						dialog.setTitle("Shoot");
-						dialog.setHeaderText(null);
-						dialog.setContentText("Select the first coordinate for your shot:");
-						Optional<Character> result3 = dialog.showAndWait();
-						if (result3.isPresent()) {
-							x = result3.get() - 64;
-						}
-						
-						ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
-						dialog2.setTitle("Shoot");
-						dialog2.setHeaderText(null);
-						dialog2.setContentText("Select the second coordinate for your shot:");
-						Optional<Integer> result4 = dialog2.showAndWait();
-						if (result4.isPresent()) {
-							y = result4.get();
-						}
-					} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.HIT || boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.MISS);
-					x--;
-					y--;
-					done = shotCon.shot(boards[0].getTurn() % 2, x, y);
-					break;
-				case "Spy Plane":
-					Character colRow = null;
-					ChoiceDialog<Character> dialog = new ChoiceDialog<>('A', spyPlane);
-					dialog.setTitle("Spy Plane");
+			case "Shot":
+				do {
+					ChoiceDialog<Character> dialog = new ChoiceDialog<>('A', letters);
+					dialog.setTitle("Shoot");
 					dialog.setHeaderText(null);
-					dialog.setContentText("Select the column or row you wish to check:");
+					dialog.setContentText("Select the first coordinate for your shot:");
 					Optional<Character> result3 = dialog.showAndWait();
 					if (result3.isPresent()) {
-						colRow = result3.get();
+						x = result3.get() - 64;
 					}
-					if (colRow >= 65) {
-						shotCon.spyPlane(boards[0].getTurn() % 2, boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getCells()[colRow - 64]);
-					} else {
-						Cell[] spy = new Cell[10];
-						for (int i = 0; i < spy.length; i++) {
-							spy[i] = boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getCells()[i][colRow - 48];
-						}
-						shotCon.spyPlane(boards[0].getTurn() % 2, spy);
-					}
-					break;
-					
-				case "Mortar":
-					do {
-						ChoiceDialog<Character> dialog1 = new ChoiceDialog<>('A', letters);
-						dialog1.setTitle("Mortar");
-						dialog1.setHeaderText(null);
-						dialog1.setContentText("Select the first coordinate for your shot:");
-						Optional<Character> result1 = dialog1.showAndWait();
-						if (result1.isPresent()) {
-							x = result1.get() - 64;
-						}
-						
-						ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
-						dialog2.setTitle("Mortar");
-						dialog2.setHeaderText(null);
-						dialog2.setContentText("Select the second coordinate for your shot:");
-						Optional<Integer> result4 = dialog2.showAndWait();
-						if (result4.isPresent()) {
-							y = result4.get();
-						}
-					} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.HIT || boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.MISS);
-					boolean valid = true;
-					do {
-						valid = true;
-						ChoiceDialog<Character> dialog1 = new ChoiceDialog<>('A', letters);
-						dialog1.setTitle("Mortar");
-						dialog1.setHeaderText(null);
-						dialog1.setContentText("Select the first coordinate for your shot (this coordinate must be diagonal to the previous one):");
-						Optional<Character> result1 = dialog1.showAndWait();
-						if (result1.isPresent()) {
-							x2 = result1.get() - 64;
-						}
-						
-						ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
-						dialog2.setTitle("Mortar");
-						dialog2.setHeaderText(null);
-						dialog2.setContentText("Select the second coordinate for your shot (this coordinate must be diagonal to the previous one):");
-						Optional<Integer> result4 = dialog2.showAndWait();
-						if (result4.isPresent()) {
-							y2 = result4.get();
-						}
-						if (!(x - 1 == x2 && y - 1 == y2) && !(x + 1 == x2 && y + 1 == y2) && !(x + 1 == x2 && y - 1 == y2) && !(x - 1 == x2 && y + 1 == y2)) {
-							valid = false;
-						}
-					} while (!valid);
-					x--;
-					y--;
-					x2--;
-					y2--;
-					done = shotCon.mortarStrike(boards[0].getTurn() % 2, x, x2, y, y2);
-					break;
-				case "Missile Barrage":
-					do {
-						ChoiceDialog<Character> dialog1 = new ChoiceDialog<>('A', letters);
-						dialog1.setTitle("Missile Barrage");
-						dialog1.setHeaderText(null);
-						dialog1.setContentText("Select the first coordinate for your shot (3 additional shots will be chosen at random):");
-						Optional<Character> result1 = dialog1.showAndWait();
-						if (result1.isPresent()) {
-							x = result1.get() - 64;
-						}
-						
-						ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
-						dialog2.setTitle("Missile Barrage");
-						dialog2.setHeaderText(null);
-						dialog2.setContentText("Select the second coordinate for your shot (3 additional shots will be chosen at random):");
-						Optional<Integer> result4 = dialog2.showAndWait();
-						if (result4.isPresent()) {
-							y = result4.get();
-						}
-					} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.HIT || boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.MISS);
-					x--;
-					y--;
-					shotCon.missileBarrage(boards[0].getTurn() % 2, x, y);
-					break;
-				case "Sonar":
-					ChoiceDialog<Character> dialog1 = new ChoiceDialog<>('A', letters);
-					dialog1.setTitle("Sonar");
-					dialog1.setHeaderText(null);
-					dialog1.setContentText("Select the first coordinate for the sonar ping:");
-					Optional<Character> result1 = dialog1.showAndWait();
-					if (result1.isPresent()) {
-						x = result1.get() - 64;
-					}
-					
+
 					ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
-					dialog2.setTitle("Missile Barrage");
+					dialog2.setTitle("Shoot");
 					dialog2.setHeaderText(null);
-					dialog2.setContentText("Select the second coordinate for the sonar ping:");
+					dialog2.setContentText("Select the second coordinate for your shot:");
 					Optional<Integer> result4 = dialog2.showAndWait();
 					if (result4.isPresent()) {
 						y = result4.get();
 					}
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Sonar Ping");
-					alert.setHeaderText(null);
-					alert.setContentText("There are " + shotCon.sonar(boards[0].getTurn() % 2, x - 1, y - 1) + " ship tiles in this area!");
-					alert.showAndWait();
-					break;
-				case "Double Shot":
-					do {
-						ChoiceDialog<Character> dialog5 = new ChoiceDialog<>('A', letters);
-						dialog5.setTitle("Shoot");
-						dialog5.setHeaderText(null);
-						dialog5.setContentText("Select the first coordinate for your shot:");
-						Optional<Character> result5 = dialog5.showAndWait();
-						if (result5.isPresent()) {
-							x = result5.get() - 64;
-						}
-						
-						ChoiceDialog<Integer> dialog6 = new ChoiceDialog<>(1, numbers);
-						dialog6.setTitle("Shoot");
-						dialog6.setHeaderText(null);
-						dialog6.setContentText("Select the second coordinate for your shot:");
-						Optional<Integer> result6 = dialog6.showAndWait();
-						if (result6.isPresent()) {
-							y = result6.get();
-						}
-					} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.HIT || boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.MISS);
-					do {
-						ChoiceDialog<Character> dialog5 = new ChoiceDialog<>('A', letters);
-						dialog5.setTitle("Shoot");
-						dialog5.setHeaderText(null);
-						dialog5.setContentText("Select the first coordinate for your shot:");
-						Optional<Character> result5 = dialog5.showAndWait();
-						if (result5.isPresent()) {
-							x2 = result5.get() - 64;
-						}
-						
-						ChoiceDialog<Integer> dialog6 = new ChoiceDialog<>(1, numbers);
-						dialog6.setTitle("Shoot");
-						dialog6.setHeaderText(null);
-						dialog6.setContentText("Select the second coordinate for your shot:");
-						Optional<Integer> result6 = dialog6.showAndWait();
-						if (result6.isPresent()) {
-							y2 = result6.get();
-						}
-					} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.HIT || boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1].getCellState() == cellState.MISS);
-					x--;
-					y--;
-					x2--;
-					y2--;
-					done = shotCon.doubleShot(boards[0].getTurn() % 2, x, x2, y, y2);
-					break;
-				case "Save":
-					saveGame();
-					break;
-							
-			} 
-			viewer.passPlayer();
-			
+				} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+						.getCellState() == cellState.HIT
+						|| boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+								.getCellState() == cellState.MISS);
+				x--;
+				y--;
+				done = shotCon.shot(boards[0].getTurn() % 2, x, y);
+				break;
+			case "Spy Plane":
+				Character colRow = null;
+				ChoiceDialog<Character> dialog = new ChoiceDialog<>('A', spyPlane);
+				dialog.setTitle("Spy Plane");
+				dialog.setHeaderText(null);
+				dialog.setContentText("Select the column or row you wish to check:");
+				Optional<Character> result3 = dialog.showAndWait();
+				if (result3.isPresent()) {
+					colRow = result3.get();
+				}
+				if (colRow >= 65) {
+					shotCon.spyPlane(boards[0].getTurn() % 2,
+							boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getCells()[colRow - 64]);
+				} else {
+					Cell[] spy = new Cell[10];
+					for (int i = 0; i < spy.length; i++) {
+						spy[i] = boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getCells()[i][colRow - 48];
+					}
+					shotCon.spyPlane(boards[0].getTurn() % 2, spy);
+				}
+				break;
+
+			case "Mortar":
+				do {
+					ChoiceDialog<Character> dialog1 = new ChoiceDialog<>('A', letters);
+					dialog1.setTitle("Mortar");
+					dialog1.setHeaderText(null);
+					dialog1.setContentText("Select the first coordinate for your shot:");
+					Optional<Character> result1 = dialog1.showAndWait();
+					if (result1.isPresent()) {
+						x = result1.get() - 64;
+					}
+
+					ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
+					dialog2.setTitle("Mortar");
+					dialog2.setHeaderText(null);
+					dialog2.setContentText("Select the second coordinate for your shot:");
+					Optional<Integer> result4 = dialog2.showAndWait();
+					if (result4.isPresent()) {
+						y = result4.get();
+					}
+				} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+						.getCellState() == cellState.HIT
+						|| boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+								.getCellState() == cellState.MISS);
+				boolean valid = true;
+				do {
+					valid = true;
+					ChoiceDialog<Character> dialog1 = new ChoiceDialog<>('A', letters);
+					dialog1.setTitle("Mortar");
+					dialog1.setHeaderText(null);
+					dialog1.setContentText(
+							"Select the first coordinate for your shot (this coordinate must be diagonal to the previous one):");
+					Optional<Character> result1 = dialog1.showAndWait();
+					if (result1.isPresent()) {
+						x2 = result1.get() - 64;
+					}
+
+					ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
+					dialog2.setTitle("Mortar");
+					dialog2.setHeaderText(null);
+					dialog2.setContentText(
+							"Select the second coordinate for your shot (this coordinate must be diagonal to the previous one):");
+					Optional<Integer> result4 = dialog2.showAndWait();
+					if (result4.isPresent()) {
+						y2 = result4.get();
+					}
+					if (!(x - 1 == x2 && y - 1 == y2) && !(x + 1 == x2 && y + 1 == y2) && !(x + 1 == x2 && y - 1 == y2)
+							&& !(x - 1 == x2 && y + 1 == y2)) {
+						valid = false;
+					}
+				} while (!valid);
+				x--;
+				y--;
+				x2--;
+				y2--;
+				done = shotCon.mortarStrike(boards[0].getTurn() % 2, x, x2, y, y2);
+				break;
+			case "Missile Barrage":
+				do {
+					ChoiceDialog<Character> dialog1 = new ChoiceDialog<>('A', letters);
+					dialog1.setTitle("Missile Barrage");
+					dialog1.setHeaderText(null);
+					dialog1.setContentText(
+							"Select the first coordinate for your shot (3 additional shots will be chosen at random):");
+					Optional<Character> result1 = dialog1.showAndWait();
+					if (result1.isPresent()) {
+						x = result1.get() - 64;
+					}
+
+					ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
+					dialog2.setTitle("Missile Barrage");
+					dialog2.setHeaderText(null);
+					dialog2.setContentText(
+							"Select the second coordinate for your shot (3 additional shots will be chosen at random):");
+					Optional<Integer> result4 = dialog2.showAndWait();
+					if (result4.isPresent()) {
+						y = result4.get();
+					}
+				} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+						.getCellState() == cellState.HIT
+						|| boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+								.getCellState() == cellState.MISS);
+				x--;
+				y--;
+				shotCon.missileBarrage(boards[0].getTurn() % 2, x, y);
+				break;
+			case "Sonar":
+				ChoiceDialog<Character> dialog1 = new ChoiceDialog<>('A', letters);
+				dialog1.setTitle("Sonar");
+				dialog1.setHeaderText(null);
+				dialog1.setContentText("Select the first coordinate for the sonar ping:");
+				Optional<Character> result1 = dialog1.showAndWait();
+				if (result1.isPresent()) {
+					x = result1.get() - 64;
+				}
+
+				ChoiceDialog<Integer> dialog2 = new ChoiceDialog<>(1, numbers);
+				dialog2.setTitle("Missile Barrage");
+				dialog2.setHeaderText(null);
+				dialog2.setContentText("Select the second coordinate for the sonar ping:");
+				Optional<Integer> result4 = dialog2.showAndWait();
+				if (result4.isPresent()) {
+					y = result4.get();
+				}
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Sonar Ping");
+				alert.setHeaderText(null);
+				alert.setContentText("There are " + shotCon.sonar(boards[0].getTurn() % 2, x - 1, y - 1)
+						+ " ship tiles in this area!");
+				alert.showAndWait();
+				break;
+			case "Double Shot":
+				do {
+					ChoiceDialog<Character> dialog5 = new ChoiceDialog<>('A', letters);
+					dialog5.setTitle("Shoot");
+					dialog5.setHeaderText(null);
+					dialog5.setContentText("Select the first coordinate for your shot:");
+					Optional<Character> result5 = dialog5.showAndWait();
+					if (result5.isPresent()) {
+						x = result5.get() - 64;
+					}
+
+					ChoiceDialog<Integer> dialog6 = new ChoiceDialog<>(1, numbers);
+					dialog6.setTitle("Shoot");
+					dialog6.setHeaderText(null);
+					dialog6.setContentText("Select the second coordinate for your shot:");
+					Optional<Integer> result6 = dialog6.showAndWait();
+					if (result6.isPresent()) {
+						y = result6.get();
+					}
+				} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+						.getCellState() == cellState.HIT
+						|| boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+								.getCellState() == cellState.MISS);
+				do {
+					ChoiceDialog<Character> dialog5 = new ChoiceDialog<>('A', letters);
+					dialog5.setTitle("Shoot");
+					dialog5.setHeaderText(null);
+					dialog5.setContentText("Select the first coordinate for your shot:");
+					Optional<Character> result5 = dialog5.showAndWait();
+					if (result5.isPresent()) {
+						x2 = result5.get() - 64;
+					}
+
+					ChoiceDialog<Integer> dialog6 = new ChoiceDialog<>(1, numbers);
+					dialog6.setTitle("Shoot");
+					dialog6.setHeaderText(null);
+					dialog6.setContentText("Select the second coordinate for your shot:");
+					Optional<Integer> result6 = dialog6.showAndWait();
+					if (result6.isPresent()) {
+						y2 = result6.get();
+					}
+				} while (boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+						.getCellState() == cellState.HIT
+						|| boards[boards[0].getTurn() % 2 == 0 ? 1 : 0].getFilter()[x - 1][y - 1]
+								.getCellState() == cellState.MISS);
+				x--;
+				y--;
+				x2--;
+				y2--;
+				done = shotCon.doubleShot(boards[0].getTurn() % 2, x, x2, y, y2);
+				break;
+			case "Save":
+				saveGame();
+				break;
+
+			}
+			boards[0].setTurn(boards[0].getTurn() + 1);
+			boards[1].setTurn(boards[0].getTurn());
+			viewer.run(boards, boards[0].getTurn() % 2);
 		} while (!done);
 	}
 
