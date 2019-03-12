@@ -35,6 +35,8 @@ public class Battleship2 {
 		if (file != null) {
 			boards = serializer.read(file);
 			try {
+				players[0] = boards[0].getPlayer();
+				players[1] = boards[1].getPlayer();
 				shotCon = new ShotController(boards);
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Load Game");
