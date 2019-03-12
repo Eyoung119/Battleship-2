@@ -360,7 +360,11 @@ public class Battleship2 {
 		Optional<ButtonType> result = alert.showAndWait();
 
 		if (result.orElse(leave) == startOver) {
-
+			try {
+				menu.start(menu.getStage());
+			} catch (Exception e) {
+				
+			}
 		} else {
 			Platform.exit();
 		}
