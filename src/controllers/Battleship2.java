@@ -99,11 +99,21 @@ public class Battleship2 {
 		ArrayList<Character> spyPlane = new ArrayList<>();
 		ArrayList<String> attacks = new ArrayList<>();
 		attacks.add("Shot");
-		attacks.add("Spy Plane");
-		attacks.add("Mortar");
-		attacks.add("Missile Barrage");
-		attacks.add("Sonar");
-		attacks.add("Double Shot");
+		if(!players[boards[0].getTurn() % 2].getShips().get("Carrier").isWeaponUsed()) {			
+			attacks.add("Spy Plane");
+		}
+		if(!players[boards[0].getTurn() % 2].getShips().get("Battleship").isWeaponUsed()) {			
+			attacks.add("Mortar");
+		}
+		if(!players[boards[0].getTurn() % 2].getShips().get("Cruiser").isWeaponUsed()) {			
+			attacks.add("Missile Barrage");
+		}
+		if(!players[boards[0].getTurn() % 2].getShips().get("Submarine").isWeaponUsed()) {			
+			attacks.add("Sonar");
+		}
+		if(!players[boards[0].getTurn() % 2].getShips().get("Destroyer").isWeaponUsed()) {			
+			attacks.add("Double Shot");
+		}
 		attacks.add("Save");
 		ArrayList<Character> letters = new ArrayList<>();
 		for (int i = 65; i < 75; i++) {
