@@ -6,6 +6,7 @@ public class Ship implements Serializable {
 	private shipType type;
 	private boolean isSunk = false;
 	private int length;
+	private boolean weaponUsed = false;
 	
 	public Ship(shipType type) {
 		setShipType(type);
