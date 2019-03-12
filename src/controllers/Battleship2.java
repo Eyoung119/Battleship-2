@@ -351,6 +351,20 @@ public class Battleship2 {
 			boards[1].setTurn(boards[0].getTurn());
 			viewer.run(boards, boards[0].getTurn() % 2);
 		} while (!done);
+		
+		ButtonType startOver = new ButtonType("Play Again", ButtonData.OK_DONE);
+		ButtonType leave = new ButtonType("Exit", ButtonData.CANCEL_CLOSE);
+		Alert alert = new Alert(AlertType.CONFIRMATION, "Congratulations!\nYou have Won!", startOver, leave);
+
+		alert.setTitle("Win Menu");
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.orElse(leave) == startOver) {
+
+		} else {
+			Platform.exit();
+		}
+		
 	}
 
 	public void swapturns() {
