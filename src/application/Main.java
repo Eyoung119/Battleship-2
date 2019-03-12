@@ -21,7 +21,7 @@ public class Main extends Application {
 			Parent root = loader.load();
 			
 		    
-	        Scene scene = new Scene(root, 359, 374);
+	        Scene scene = new Scene(root, 345, 365);
 	    
 	        primaryStage.setTitle("Battleship 2: MORE");
 	        primaryStage.setScene(scene);
