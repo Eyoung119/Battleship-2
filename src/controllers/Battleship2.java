@@ -18,6 +18,7 @@ import viewer.Viewer;
 
 public class Battleship2 {
 	private static Viewer viewer = new Viewer();
+	private static Main menu = new Main();
 	private static Board[] boards = new Board[2];
 	private static Player[] players = new Player[2];
 	private static ShotController shotCon;
