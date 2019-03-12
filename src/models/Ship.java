@@ -27,6 +27,14 @@ public class Ship implements Serializable {
 		}
 	}
 	
+	public boolean isWeaponUsed() {
+		return weaponUsed;
+	}
+	
+	public void setWeaponUsed(boolean weaponUsed) {
+		this.weaponUsed = weaponUsed;
+	}
+	
 	public shipType getShipType() {
 		return type;
 	}
