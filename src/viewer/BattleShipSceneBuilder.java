@@ -27,6 +27,7 @@ public class BattleShipSceneBuilder {
 	private final String SHIP_TILE_NOT_HIT = "-fx-background-color: grey";
 	private final String OCEAN_TILE_HIT = "-fx-background-color: #99ccff";
 	private final String OCEAN_TILE_NOT_HIT = "-fx-background-color: #6699ff";
+	private final String ALPHABET="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	public String shotCall;
 	public int x;
 	public int y;
@@ -34,6 +35,7 @@ public class BattleShipSceneBuilder {
 	private int[][] b2;
 	int numofsquares = 12;
 	private Board[] boardInput;
+	
 
 	public void passBoard(Board[] b) {
 		boardInput = b;
@@ -56,14 +58,18 @@ public class BattleShipSceneBuilder {
 					root.getChildren().addAll(label);
 				} else {
 					if (i == 0 || i == 11) {
-						Label label = new Label();
+						Label label = new Label((ALPHABET.charAt(j-1))+"");
+						label.setFont(new Font("Arial", 20));
+						label.setTextFill(Color.ANTIQUEWHITE);
 						label.setStyle(BORDER);
 						label.setMinSize(25, 50);
 						root.setConstraints(label, i, j);
 						root.getChildren().addAll(label);
 					} else {
 						if (j == 0 || j == 11) {
-							Label label = new Label();
+							Label label = new Label(i+"");
+							label.setFont(new Font("Arial", 20));
+							label.setTextFill(Color.ANTIQUEWHITE);
 							label.setStyle(BORDER);
 							label.setMinSize(50, 25);
 							root.setConstraints(label, i, j);
@@ -158,14 +164,18 @@ public class BattleShipSceneBuilder {
 					root.getChildren().addAll(label);
 				} else {
 					if (i == 0 || i == 11) {
-						Label label = new Label();
+						Label label = new Label((ALPHABET.charAt(j-1))+"");
+						label.setFont(new Font("Arial", 20));
+						label.setTextFill(Color.ANTIQUEWHITE);
 						label.setStyle(BORDER);
 						label.setMinSize(25, 50);
 						root.setConstraints(label, i + offset, j);
 						root.getChildren().addAll(label);
 					} else {
 						if (j == 0 || j == 11) {
-							Label label = new Label();
+							Label label = new Label(i+"");
+							label.setFont(new Font("Arial", 20));
+							label.setTextFill(Color.ANTIQUEWHITE);
 							label.setStyle(BORDER);
 							label.setMinSize(50, 25);
 							root.setConstraints(label, i + offset, j);
@@ -259,27 +269,13 @@ public class BattleShipSceneBuilder {
 		root.setConstraints(P2Name, numofsquares + 3, 14, 50, 1);
 		root.getChildren().addAll(P1Name, P2Name);
 
-		Button saveBtn = new Button(" Save ");
+		Label saveBtn = new Label();
+		saveBtn.setStyle("-fx-background-color: #363940");
+		saveBtn.setMinSize(50, 50);
 		root.setConstraints(saveBtn, numofsquares + 1, 2);
 		root.getChildren().add(saveBtn);
 
-		saveBtn.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				Main.getControl().saveGame();
-			}
-		});
 
-		Button shootBtn = new Button("Shoot");
-		root.setConstraints(shootBtn, numofsquares + 1, 4);
-		root.getChildren().add(shootBtn);
-
-		shootBtn.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-
-			}
-		});
 		root.setStyle("-fx-background-color: #363940");
 		root.setAlignment(Pos.CENTER);
 		Scene scene = new Scene(root, 1700, 900);
